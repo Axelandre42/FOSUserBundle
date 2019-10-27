@@ -48,7 +48,7 @@ class Mailer implements MailerInterface
      * @param EngineInterface       $templating
      * @param array                 $parameters
      */
-    public function __construct($mailer, UrlGeneratorInterface $router, Environment $templating array $parameters)
+    public function __construct($mailer, UrlGeneratorInterface $router, Environment $templating, array $parameters)
     {
         $this->mailer = $mailer;
         $this->router = $router;
