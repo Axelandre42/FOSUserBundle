@@ -31,7 +31,7 @@ class Mailer implements MailerInterface
     protected $router;
 
     /**
-     * @var EngineInterface
+     * @var Environment
      */
     protected $templating;
 
