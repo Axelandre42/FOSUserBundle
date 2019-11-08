@@ -59,7 +59,7 @@ class ChangePasswordController extends AbstractController
         }
 
         $event = new GetResponseUserEvent($user, $request);
-        $this->eventDispatcher->dispatch($event, FOSUserEvents::CHANGE_PASSWORD_INITIALIZE);
+        $this->eventDispatcher->dispatch($event);
 
         if (null !== $event->getResponse()) {
             return $event->getResponse();
@@ -72,7 +72,7 @@ class ChangePasswordController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $event = new FormEvent($form, $request);
-            $this->eventDispatcher->dispatch($event, FOSUserEvents::CHANGE_PASSWORD_SUCCESS);
+            $this->eventDispatcher->dispatch($event);
 
             $this->userManager->updateUser($user);
 
@@ -81,7 +81,7 @@ class ChangePasswordController extends AbstractController
                 $response = new RedirectResponse($url);
             }
 
-            $this->eventDispatcher->dispatch(new FilterUserResponseEvent($user, $request, $response), FOSUserEvents::CHANGE_PASSWORD_COMPLETED);
+            $this->eventDispatcher->dispatch(new FilterUserResponseEvent($user, $request, $response));
 
             return $response;
         }

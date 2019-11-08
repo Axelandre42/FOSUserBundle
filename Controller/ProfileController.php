@@ -73,7 +73,7 @@ class ProfileController extends AbstractController
         }
 
         $event = new GetResponseUserEvent($user, $request);
-        $this->eventDispatcher->dispatch($event, FOSUserEvents::PROFILE_EDIT_INITIALIZE);
+        $this->eventDispatcher->dispatch($event);
 
         if (null !== $event->getResponse()) {
             return $event->getResponse();
@@ -86,7 +86,7 @@ class ProfileController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $event = new FormEvent($form, $request);
-            $this->eventDispatcher->dispatch($event, FOSUserEvents::PROFILE_EDIT_SUCCESS);
+            $this->eventDispatcher->dispatch($event);
 
             $this->userManager->updateUser($user);
 
@@ -95,7 +95,7 @@ class ProfileController extends AbstractController
                 $response = new RedirectResponse($url);
             }
 
-            $this->eventDispatcher->dispatch(new FilterUserResponseEvent($user, $request, $response), FOSUserEvents::PROFILE_EDIT_COMPLETED);
+            $this->eventDispatcher->dispatch(new FilterUserResponseEvent($user, $request, $response));
 
             return $response;
         }

@@ -59,7 +59,7 @@ class RegistrationController extends AbstractController
         $user->setEnabled(true);
 
         $event = new GetResponseUserEvent($user, $request);
-        $this->eventDispatcher->dispatch($event, FOSUserEvents::REGISTRATION_INITIALIZE);
+        $this->eventDispatcher->dispatch($event);
 
         if (null !== $event->getResponse()) {
             return $event->getResponse();
@@ -73,7 +73,7 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $event = new FormEvent($form, $request);
-                $this->eventDispatcher->dispatch($event, FOSUserEvents::REGISTRATION_SUCCESS);
+                $this->eventDispatcher->dispatch($event);
 
                 $this->userManager->updateUser($user);
 
@@ -82,13 +82,13 @@ class RegistrationController extends AbstractController
                     $response = new RedirectResponse($url);
                 }
 
-                $this->eventDispatcher->dispatch(new FilterUserResponseEvent($user, $request, $response), FOSUserEvents::REGISTRATION_COMPLETED);
+                $this->eventDispatcher->dispatch(new FilterUserResponseEvent($user, $request, $response));
 
                 return $response;
             }
 
             $event = new FormEvent($form, $request);
-            $this->eventDispatcher->dispatch($event, FOSUserEvents::REGISTRATION_FAILURE);
+            $this->eventDispatcher->dispatch($event);
 
             if (null !== $response = $event->getResponse()) {
                 return $response;
@@ -145,7 +145,7 @@ class RegistrationController extends AbstractController
         $user->setEnabled(true);
 
         $event = new GetResponseUserEvent($user, $request);
-        $this->eventDispatcher->dispatch($event, FOSUserEvents::REGISTRATION_CONFIRM);
+        $this->eventDispatcher->dispatch($event);
 
         $userManager->updateUser($user);
 
@@ -154,7 +154,7 @@ class RegistrationController extends AbstractController
             $response = new RedirectResponse($url);
         }
 
-        $this->eventDispatcher->dispatch(new FilterUserResponseEvent($user, $request, $response), FOSUserEvents::REGISTRATION_CONFIRMED);
+        $this->eventDispatcher->dispatch(new FilterUserResponseEvent($user, $request, $response));
 
         return $response;
     }

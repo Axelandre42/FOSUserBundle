@@ -50,6 +50,6 @@ class AuthenticationListenerTest extends TestCase
 
     public function testAuthenticate()
     {
-        $this->listener->authenticate($this->event, FOSUserEvents::REGISTRATION_COMPLETED, $this->eventDispatcher);
+        $this->listener->authenticate($this->event, $this->eventDispatcher);
     }
 }
